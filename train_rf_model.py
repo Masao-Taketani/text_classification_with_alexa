@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 import sklearn.metrics as metrics
 import numpy as np
 
-data = pickle.load(open("text/genre.pickle", "rb"))
+data = pickle.load(open("data/pkl/genre.pickle", "rb"))
 #label
 y = data[0]
 #TFIDF

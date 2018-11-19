@@ -18,14 +18,14 @@ def read_files(path, label):
 		tfidf.add_file(f)
 		y.append(label)
 
-read_files('text/sports-watch', 0)
-read_files('text/it-life-hack', 1)
-read_files('text/movie-enter', 2)
+read_files('data/text/sports-watch', 0)
+read_files('data/text/it-life-hack', 1)
+read_files('data/text/movie-enter', 2)
 
 #TFIDFでベクトルに変換
 x = tfidf.calc_files()
 
 #保存
-pickle.dump([y, x], open('text/genre.pickle', 'wb'))
-tfidf.save_dic('text/genre-tfidf.dic')
+pickle.dump([y, x], open('data/pkl/genre.pickle', 'wb'))
+tfidf.save_dic('data/dic/genre-tfidf.dic')
 print('ok')

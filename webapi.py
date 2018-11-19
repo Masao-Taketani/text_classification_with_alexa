@@ -10,7 +10,6 @@ app = flask.Flask(__name__)
 @app.route('/', methods=['POST'])
 def api():
 	#URL
-	print('test711')
 	if request.headers['Content-Type'] != 'application/json':
 		print('test2')
 		print(request.headers['Content-Type'])

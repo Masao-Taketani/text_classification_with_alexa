@@ -3,62 +3,75 @@ import pickle
 import numpy as np
 
 #tagger = MeCab.Tagger("-d /home/m-taketani/macab-ipadic-neologd")
+#MeCabのTaggerインスタンスを生成
 tagger = MeCab.Tagger()
 
 #単語辞書
 word_dic = {'_id': 0}
 #文書全体で単語の出現回数
 dt_dic = {}
-#全文書をIDで保存
+#全文書をIDで保存するためのリスト
 files = []
 
+##分かち書きを行う関数
 def tokenize(text):
+	#結果を返すためのリスト
 	result = []
+	#taggerインスタンスによる解析結果をword_sに格納
 	word_s = tagger.parse(text)
+	#解析結果を改行ごとに分割後、ループ処理
 	for n in word_s.split("\n"):
+		#文字が'EOS'、または空の場合、スキップ
 		if n == 'EOS' or n == '':
 			continue
+		#解析結果をタブで分割し、2番目の内容をpに代入
 		p = n.split("\t")[1].split(",")
+		#p[0]は品詞、p[1]は品詞細分類1、p[6]は原形
 		h, h2, org = (p[0], p[1], p[6])
+		#品詞が'名詞', '動詞', でないときスキップ
 		if not (h in ['名詞', '動詞', '形容詞']):
 			continue
+		#品詞が'名詞'かつ品詞細分類1が'数'のときスキップ
 		if h == '名詞' and h2 == '数':
 			continue
+		#上にある3つのif文でスキップされなかった原形を'result'に追加
 		result.append(org)
 	return result
 
+##単語をIDに変換する関数(引数のwordsには単語のリストを指定)
 def words_to_ids(words, auto_add = True):
+	#結果を返すためのリスト
 	result = []
+	#wordsリストのそれぞれの単語に対してループ
 	for w in words:
+		#単語が既に単語辞書の中にある場合
+		#その単語に該当するidを'result'リストに追加
 		if w in word_dic:
 			result.append(word_dic[w])
-			continue
+		#単語が単語辞書に存在しない場合は'auto_add'が
+		#Trueのときに辞書に単語を追加を行い、
+		#その単語のidを'result'リストに追加
 		elif auto_add:
 			id = word_dic[w] = word_dic['_id']
 			word_dic['_id'] += 1
 			result.append(id)
 	return result
 
-def words_to_ids(words, auto_add = True):
-	result = []
-	for w in words:
-		if w in word_dic:
-			result.append(word_dic[w])
-			continue
-		elif auto_add:
-			id = word_dic[w] = word_dic['_id']
-			word_dic['_id'] += 1
-			result.append(id)
-	return result
-
+#指定のテキストを'files'リストにidで格納する関数
 def add_text(text):
+	#指定のテキストに分かち書きを行い、単語をidに
+	#に変換後、変数idsで受け取る
 	ids = words_to_ids(tokenize(text))
+	#テキストをid化したものを'files'リストに格納
 	files.append(ids)
 
+#指定のパスにあるファイルを'utf-8'で開き、ファイル内の
+#該当単語をidに変換後、'files'リストに格納する関数
 def add_file(path):
 	with open(path, "r", encoding="utf-8") as f:
 		s = f.read()
 		add_text(s)
+
 
 def calc_files():
 	global dt_dic

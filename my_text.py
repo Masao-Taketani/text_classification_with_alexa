@@ -7,7 +7,7 @@ from keras.optimizers import RMSprop
 from keras.models import model_from_json
 
 
-tfidf.load_dic("text/genre-tfidf.dic")
+tfidf.load_dic("data/dic/genre-tfidf.dic")
 
 nb_classes = 2
 
@@ -24,10 +24,10 @@ model.compile(
 	loss='categorical_crossentropy',
 	optimizer=RMSprop(),
 	metrics=['accuracy'])
-model.load_weights('./text/genre-model.hdf5')
+model.load_weights('data/weights/genre-model.hdf5')
 
 def check_genre(text):
-	LABELS = ["sports", "IT"]
+	LABELS = ["sports", "IT", "movie"]
 
 	data = tfidf.calc_text(text)
 	pre = model.predict(np.array([data]))[0]
