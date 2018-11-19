@@ -8,7 +8,7 @@ tagger = MeCab.Tagger()
 
 #単語辞書
 word_dic = {'_id': 0}
-#文書全体で単語の出現回数
+#全ての文書からそれぞれの単語の出現回数を記録
 dt_dic = {}
 #全文書をIDで保存するためのリスト
 files = []
@@ -57,12 +57,13 @@ def words_to_ids(words, auto_add = True):
 			result.append(id)
 	return result
 
-#指定のテキストを'files'リストにidで格納する関数
+#指定の文書を'files'リストにidで格納する関数
 def add_text(text):
-	#指定のテキストに分かち書きを行い、単語をidに
+	#指定の文書に分かち書きを行い、単語をidに
 	#に変換後、変数idsで受け取る
 	ids = words_to_ids(tokenize(text))
-	#テキストをid化したものを'files'リストに格納
+	#文書の単語をid化したものを'files'リストに格納
+	#(filesリスト内には文書ごとに単語をid化したリストが入っている)
 	files.append(ids)
 
 #指定のパスにあるファイルを'utf-8'で開き、ファイル内の
@@ -72,34 +73,61 @@ def add_file(path):
 		s = f.read()
 		add_text(s)
 
-
+#TF-IDFの計算を行う関数
 def calc_files():
+	#グローバル変数の'dt_dic(全ての文書からそれぞれの単語の出現回数を記録)'
+	#辞書を使用
 	global dt_dic
+	#結果を返すためのリスト
 	result = []
+	#'files'リストの長さを変数'doc_count'に代入
 	doc_count = len(files)
+	#'dt_dic'辞書の初期化
 	dt_dic = {}
-	#単語の出現頻度を数える
+	#'files'リストに入っているそれぞれの(分かち書きをしてidに変換済みの)文書
+	#に対してループ処理
 	for words in files:
+		#辞書'used_word'の初期化
 		used_word = {}
+		#'word_dic['_id']'のidを抽出し、
+		#そのidの数だけ要素をもち、全てその要素が0となる
+		#numpy配列をdataに代入
 		data = np.zeros(word_dic['_id'])
+		#1つの文書内にあるそれぞれの単語に対してループ処理
 		for id in words:
+			#dataのid番目を1プラスする
 			data[id] += 1
+			#used_wordのid番目を1に設定する
 			used_word[id] = 1
 		#単語tが使われていればdt_dicを加算
 		for id in used_word:
+			#'dt_dic'内に指定のidがない場合、'dt_dic'の
+			#keyにidを追加し、valueを0に初期設定する。
 			if not(id in dt_dic):
 				dt_dic[id] = 0
-			dt_dic[id] = 1
-		#出現回数を割合に直す
+			#dt_dicのkeyがidであるvalueに対して1を加算(出現回数を+1)
+			dt_dic[id] += 1
+		#1つの文書の単語の出現回数を文書内に出てきた総単語数で割り、
+		#それぞれの単語の出現割合を求める(TF値)
 		data = data / len(words)
+		#それぞれの単語の出現割合を'result'リストに追加
 		result.append(data)
-	#IFIDFを計算
+
+	##TF-IDFを計算を行う
+	#文書ごとにループ処理
 	for i, doc in enumerate(result):
+		#それぞれの文書内の単語ごとにループ処理
 		for id, v in enumerate(doc):
+			#idfの計算
 			idf = np.log(doc_count / dt_dic[id]) + 1
+			#TFxIDFの値を計算し、計算結果と1を比べて小さい方の値を
+			#'doc[id]'に代入(＝最大を1とする)
 			doc[id] = min([doc[id] * idf, 1.0])
+		#i番目の文書ごとにそれぞれの単語に対して算出したTF-IDF値
+		#を'result'リストのi番目に代入
 		result[i] = doc
 	return result
+
 
 def save_dic(fname):
 	pickle.dump(
