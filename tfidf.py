@@ -57,7 +57,7 @@ def words_to_ids(words, auto_add = True):
 			result.append(id)
 	return result
 
-#指定の文書を'files'リストにidで格納する関数
+##指定の文書を'files'リストにidで格納する関数
 def add_text(text):
 	#指定の文書に分かち書きを行い、単語をidに
 	#に変換後、変数idsで受け取る
@@ -66,14 +66,14 @@ def add_text(text):
 	#(filesリスト内には文書ごとに単語をid化したリストが入っている)
 	files.append(ids)
 
-#指定のパスにあるファイルを'utf-8'で開き、ファイル内の
-#該当単語をidに変換後、'files'リストに格納する関数
+##指定のパスにあるファイルを'utf-8'で開き、ファイル内の
+##該当単語をidに変換後、'files'リストに格納する関数
 def add_file(path):
 	with open(path, "r", encoding="utf-8") as f:
 		s = f.read()
 		add_text(s)
 
-#TF-IDFの計算を行う関数
+##TF-IDFの計算を行う関数
 def calc_files():
 	#グローバル変数の'dt_dic(全ての文書からそれぞれの単語の出現回数を記録)'
 	#辞書を使用
@@ -128,28 +128,51 @@ def calc_files():
 		result[i] = doc
 	return result
 
-
+##辞書を保存する関数
 def save_dic(fname):
+	#pickleファイルに[単語辞書, 単語頻出回数記録辞書, 全文書格納辞書]
+	#の順番で保存
 	pickle.dump(
 		[word_dic, dt_dic, files],
 		open(fname, "wb"))
 
+##指定した辞書を格納したpickleファイルをロードする関数
 def load_dic(fname):
+	#グローバル変数としてword_dic, dt_dic, filesを宣言
 	global word_dic, dt_dic, files
+	#変数nに指定したpickleファイルをロードし、
+	#word_dic, dt_dic, filesで受け取る
 	n = pickle.load(open(fname, 'rb'))
 	word_dic, dt_dic, files = n
 
+##
 def calc_text(text):
+	#辞書に格納された単語の数だけ0の要素を生成し、
+	#変数dataに代入
 	data = np.zeros(word_dic['_id'])
+	#入力されたテキストに対して分かち書きを行い、
+	#それぞれの単語に対してid化を行う
+	#(新しい単語の自動追加は行わない)
 	words = words_to_ids(tokenize(text), False)
+	#入力テキストの各単語に対して出力回数を算出
 	for w in words:
+		#頻出単語に対して出力回数を1加算
 		data[w] += 1
+
+	#1つの文書の単語の出現回数を辞書に格納された総単語数で割り、
+	#それぞれの単語の出現割合を求める(TF値)
 	data = data / len(words)
+	##TF-IDFを計算を行う
+	#文書ごとにループ処理
 	for id, v in enumerate(data):
+		#idfの計算(dt_dicはグローバル変数のものを使用)
 		idf = np.log(len(files) / dt_dic[id]) + 1
+		#TFxIDFの値を計算し、計算結果と1を比べて小さい方の値を
+		#'doc[id]'に代入(＝最大を1とする)
 		data[id] = min([data[id] * idf, 1.0])
 	return data
 
+##tfidf.pyのテスト
 if __name__ == '__main__':
 	add_text('雨')
 	add_text('今日は、雨が降った。')
