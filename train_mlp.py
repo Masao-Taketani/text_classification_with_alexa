@@ -11,7 +11,7 @@ from keras.optimizers import RMSprop
 nb_classes = 3
 
 #データの読み込み
-data = pickle.load(open("data/genre.pickle", "rb"))
+data = pickle.load(open("data/pkl/data.pkl", "rb"))
 #正解データを変数yに代入
 y = data[0]
 #入力データを変数xに代入
@@ -49,4 +49,4 @@ hist = model.fit(
 score = model.evaluate(x_test, y_test, verbose=1)
 print("正解率＝", score[1], 'loss=', score[0])
 #モデルの重みを保存
-model.save_weights('./text/genre-model.hdf5')
+model.save_weights('./data/weights/genre-model.hdf5')

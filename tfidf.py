@@ -58,6 +58,7 @@ def words_to_ids(words, auto_add = True):
 	return result
 
 ##指定の文書を'files'リストにidで格納する関数
+#(関数'add_file'内で使用)
 def add_text(text):
 	#指定の文書に分かち書きを行い、単語をidに
 	#に変換後、変数idsで受け取る
@@ -145,7 +146,7 @@ def load_dic(fname):
 	n = pickle.load(open(fname, 'rb'))
 	word_dic, dt_dic, files = n
 
-##
+##IF-IDFの値を計算する関数(ただし、辞書への単語の自動追加は行わない)
 def calc_text(text):
 	#辞書に格納された単語の数だけ0の要素を生成し、
 	#変数dataに代入
@@ -174,9 +175,9 @@ def calc_text(text):
 
 ##tfidf.pyのテスト
 if __name__ == '__main__':
-	add_text('雨')
-	add_text('今日は、雨が降った。')
-	add_text('今日は暑い日だったけど雨が降った。')
-	add_text('今日も雨だ。でも日曜だ。')
+	add_text('昨日はおいしいごはんを食べた。')
+	add_text('今日は良い天気だ。')
+	add_text('今日は一緒にごはんにでも行かないか。')
+	add_text('今日の天気はあまり良くないが、おいしいごはんでも食べて気分を晴らそう。')
 	print(calc_files())
 	print(word_dic)
