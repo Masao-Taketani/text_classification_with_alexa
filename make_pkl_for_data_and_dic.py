@@ -35,9 +35,6 @@ dir_for_pkls = 'data/pkl/'
 os.makedirs(dir_for_pkls, exist_ok=True)
 #作成するpickleファイル名を指定
 pkl_for_data = "data.pkl"
-#空pickleファイルの作成
-with open(pkl_for_data, "wb"):
-	pass
 ##入力値とラベルを追加したリストを上で作成したpickleファイルに格納(バイナリ形式)
 pickle.dump([y, x], open(dir_for_pkls + pkl_for_data, 'wb'))
 if os.path.exists(dir_for_pkls + pkl_for_data):
@@ -47,12 +44,9 @@ else:
 
 ##[word_dic, dt_dic, files]をpickleファイルに格納(バイナリ形式)
 pkl_for_dic = 'dic.pkl'
-#空pickleファイルの作成
-with open(pkl_for_dic, "wb"):
-	pass
 #作成した辞書をpickleファイルに保存
-tfidf.save_dic(dir_for_pkl + pkl_for_dic)
-if os.path.exists(dir_for_pkl + pkl_for_dic):
+tfidf.save_dic(dir_for_pkls + pkl_for_dic)
+if os.path.exists(dir_for_pkls + pkl_for_dic):
 	print('辞書pickleファイルの保存完了')
 else:
 	print('辞書pickleファイルの保存に失敗しました')
