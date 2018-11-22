@@ -29,16 +29,22 @@ read_files('data/text/movie-enter', 2)
 #TFIDFでそれぞれの単語をベクトルに変換(辞書更新も行う)
 x = tfidf.calc_files()
 
-#入力値とラベルを追加したリストをpickleファイルに格納(バイナリ形式)
+##入力値とラベルを追加したリストをpickleファイルに格納(バイナリ形式)
 path_of_pickle_for_input_output = 'data/pkl/data.pkl'
+#再帰的にディレクトリを作成する
+os.makedirs(path_of_pickle_for_input_output, exist_ok=True)
+#リスト[y, x]を格納したpickleファイルの作成
 pickle.dump([y, x], open(path_of_pickle_for_input_output, 'wb'))
-if is os.path.exists(path_of_pickle_for_input_output):
+if os.path.exists(path_of_pickle_for_input_output):
 	print('pickleファイルの保存完了')
 else:
 	print('pickleファイルの保存に失敗しました')
 
-#[word_dic, dt_dic, files]を格納(バイナリ形式)
+##[word_dic, dt_dic, files]をpickleファイルに格納(バイナリ形式)
 path_of_dic = 'data/pkl/dic.pkl'
+#再帰的にディレクトリを作成する
+os.makedirs(path_of_dic, exist_ok=True)
+#作成した辞書をpickleファイルに保存
 tfidf.save_dic(path_of_dic)
 if os.path.exists(path_of_dic):
 	print('辞書の保存完了')
