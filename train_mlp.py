@@ -20,8 +20,9 @@ x = data[1]
 y = keras.utils.np_utils.to_categorical(y, nb_classes)
 #入力データをnumpy配列のfloat32型に変換
 x = np.array(x, dtype=np.float32)
+#入力サイズの設定
 in_size = x[0].shape[0]
-
+#学習用データと検証用データに指定の割合で分割
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.1)
 
 ##MLP(多層パーセプトロンの実装)
@@ -47,6 +48,10 @@ hist = model.fit(
 	)
 #学習後にモデルの評価
 score = model.evaluate(x_test, y_test, verbose=1)
-print("正解率＝", score[1], 'loss=', score[0])
-#モデルの重みを保存
+#精度と損失値を表示
+print("精度＝", score[1], 'loss=', score[0])
+
+#学習から得たモデルの重みを保存
 model.save_weights('./data/weights/genre-model.hdf5')
+if os.path.exists('./data/weights/genre-model.hdf5'):
+	print('モデルの重み保存完了')

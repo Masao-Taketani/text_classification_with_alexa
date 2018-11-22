@@ -38,7 +38,7 @@ else:
 	print('pickleファイルの保存に失敗しました')
 
 #[word_dic, dt_dic, files]を格納(バイナリ形式)
-path_of_dic = 'data/dic/dic.pkl'
+path_of_dic = 'data/pkl/dic.pkl'
 tfidf.save_dic(path_of_dic)
 if os.path.exists(path_of_dic):
 	print('辞書の保存完了')
