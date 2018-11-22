@@ -30,23 +30,29 @@ read_files('data/text/movie-enter', 2)
 x = tfidf.calc_files()
 
 ##入力値とラベルを追加したリストをpickleファイルに格納(バイナリ形式)
-path_of_pickle_for_input_output = 'data/pkl/data.pkl'
+dir_for_pkls = 'data/pkl/'
 #再帰的にディレクトリを作成する
-os.makedirs(path_of_pickle_for_input_output, exist_ok=True)
-#リスト[y, x]を格納したpickleファイルの作成
-pickle.dump([y, x], open(path_of_pickle_for_input_output, 'wb'))
-if os.path.exists(path_of_pickle_for_input_output):
-	print('pickleファイルの保存完了')
+os.makedirs(dir_for_pkls, exist_ok=True)
+#作成するpickleファイル名を指定
+pkl_for_data = "data.pkl"
+#空pickleファイルの作成
+with open(pkl_for_data, "wb"):
+	pass
+##入力値とラベルを追加したリストを上で作成したpickleファイルに格納(バイナリ形式)
+pickle.dump([y, x], open(dir_for_pkls + pkl_for_data, 'wb'))
+if os.path.exists(dir_for_pkls + pkl_for_data):
+	print('データpickleファイルの保存完了')
 else:
-	print('pickleファイルの保存に失敗しました')
+	print('データpickleファイルの保存に失敗しました')
 
 ##[word_dic, dt_dic, files]をpickleファイルに格納(バイナリ形式)
-path_of_dic = 'data/pkl/dic.pkl'
-#再帰的にディレクトリを作成する
-os.makedirs(path_of_dic, exist_ok=True)
+pkl_for_dic = 'dic.pkl'
+#空pickleファイルの作成
+with open(pkl_for_dic, "wb"):
+	pass
 #作成した辞書をpickleファイルに保存
-tfidf.save_dic(path_of_dic)
-if os.path.exists(path_of_dic):
-	print('辞書の保存完了')
+tfidf.save_dic(dir_for_pkl + pkl_for_dic)
+if os.path.exists(dir_for_pkl + pkl_for_dic):
+	print('辞書pickleファイルの保存完了')
 else:
-	print('辞書の保存に失敗しました')
+	print('辞書pickleファイルの保存に失敗しました')
