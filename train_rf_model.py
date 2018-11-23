@@ -4,6 +4,7 @@ from sklearn.model_selection import train_test_split
 import sklearn.metrics as metrics
 import numpy as np
 
+#データを格納したpickleファイルのロードを行う
 data = pickle.load(open("data/pkl/data.pkl", "rb"))
 #ラベルをyに代入
 y = data[0]
@@ -34,8 +35,14 @@ print(rep)
 
 #入力したテキストに対して推論を結果をテスト
 LABELS = ["スポーツ", "IT", "映画"]
-test = '今日は野球の試合がありますね。'
+test = "今日は野球の試合がありますね。"
+#辞書データの読み込み
+tfidf.load_dic("data/pkl/dic.pkl")
+#テキストをIF-IDFでベクトル化
 preprocessed_input = tfidf.calc_text(test)
+#テキストのカテゴリを推論
 y_pred = model.predict(np.array([preprocessed_input]))[0]
+#最尤推定値のインデックスを取得
 mle_index = y_pred.argmax()
-print(LABELS[mle_index])
+#推論結果のカテゴリを表示
+print("推論結果:", LABELS[mle_index])

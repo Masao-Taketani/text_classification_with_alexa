@@ -21,7 +21,7 @@ def api():
 		#'data'内にあるキー値が'text'のバリュー値を表示
 		print(data['text'])
 		#取得したテキストに対してクラスを推論し、ラベルのみを受け取る
-		label, _ , _ = predict_using_mlp.check_genre(data['text'])
+		label, _ , _ = predict_using_mlp.predict_genre(data['text'])
 		#ラベルをキー値:"label",バリュー値:変数'label'の形で返す(JSON形式)
 		return json.dumps({"label": label})
 
