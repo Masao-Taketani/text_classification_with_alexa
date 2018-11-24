@@ -9,7 +9,7 @@ from keras.layers import Dense, Dropout
 from keras.optimizers import RMSprop
 
 #分類するクラスのラベル数
-nb_classes = 3
+nb_classes = 6
 
 #データの読み込み
 data = pickle.load(open("data/pkl/data.pkl", "rb"))
