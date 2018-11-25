@@ -1,5 +1,7 @@
 # text_classification_with_alexa(Chatty Kanna👧🏻)
-![main](https://user-images.githubusercontent.com/37681936/48673899-b1c00b00-eb89-11e8-8861-69c980fcc70a.PNG)
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/37681936/48673899-b1c00b00-eb89-11e8-8861-69c980fcc70a.PNG">
+</p>
 
 ## Overview
 This Machine Learning module classifies categories of input text. By using an Amazon Alexa together, it can handle speech.
