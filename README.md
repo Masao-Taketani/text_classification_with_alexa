@@ -19,13 +19,13 @@ $ python tfidf.py
 ```console
 $ python make_pkl_for_data_and_dic.py
 ```
-Executing the above command, you will create two pickle files 'data.pkl' and 'dic.pkl' in data/pkl directory.
+Executing the above command, you will create two pickle files `data.pkl` and `dic.pkl` in `data/pkl` directory.
 
 3. Train a ML model by using Multilayer Perceptron(MLP) algorithms.
 ```console
 $ python train_mlp.py
 ```
-You will save the weights(parameters) of the model 'genre-model.hdf5' in 'data/weights' directory after training.
+You will save the weights(parameters) of the model `genre-model.hdf5` in `data/weights` directory after training.
 
 4. Test the trained model.
 ```console
