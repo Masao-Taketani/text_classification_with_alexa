@@ -10,7 +10,7 @@ The diagram of the architecture is as follows.
 You can deploy this module in a server or a local PC. It takes JSON requests first, which includes text message, and then process the data to classify categories of the input text. After predicting the category of the input text, it responds with JSON, which contains the predicted category.
 
 ## How to train a ML model and deploy it
-1. Test 'tfidf.py'.
+1. Test `tfidf.py`.
 ```console
 $ python tfidf.py
 ```
