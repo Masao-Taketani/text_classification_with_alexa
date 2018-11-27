@@ -41,7 +41,7 @@ def predict_genre(text):
 	#確率が最大となるインデックス値を返す
 	n = pre.argmax()
 	#推論結果のクラスを表示
-	print(LABELS[n], "(", pre[n], ")")
+	print('文書:',text, '予測カテゴリ:', LABELS[n], '予測確率:',"(", pre[n], ")")
 	#推論結果のクラス、確率値、推論クラスのインデックスを返す
 	return LABELS[n], float(pre[n]), int(n)
 

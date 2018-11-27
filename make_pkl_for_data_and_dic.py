@@ -36,7 +36,6 @@ dir_for_pkls = 'data/pkl/'
 os.makedirs(dir_for_pkls, exist_ok=True)
 #データ格納用pickleファイル
 pkl_for_data = "data.pkl"
-print(x)
 #入力値とラベルを追加したリストを上記のpickleファイルに格納(バイナリ形式)
 pickle.dump([y, x], open(dir_for_pkls + pkl_for_data, 'wb'))
 if os.path.exists(dir_for_pkls + pkl_for_data):
