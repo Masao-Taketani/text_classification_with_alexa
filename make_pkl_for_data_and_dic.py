@@ -25,6 +25,7 @@ def read_files(path, label):
 read_files('data/text/sports-watch', 0)
 read_files('data/text/it-life-hack', 1)
 read_files('data/text/movie-enter', 2)
+read_files('data/text/international', 3)
 
 #TFIDFでそれぞれの単語をベクトルに変換(辞書更新も行う)
 x = tfidf.calc_files()

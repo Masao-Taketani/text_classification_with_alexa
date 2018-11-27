@@ -34,7 +34,7 @@ print("精度＝", acc)
 print(rep)
 
 #入力したテキストに対して推論を結果をテスト
-LABELS = ["スポーツ", "IT", "映画"]
+LABELS = ["スポーツ", "IT", "映画", "国際"]
 test = "今日は野球の試合がありますね。"
 #辞書データの読み込み
 tfidf.load_dic("data/pkl/dic.pkl")
