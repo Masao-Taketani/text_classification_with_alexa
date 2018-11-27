@@ -4,7 +4,7 @@
 </p>
 
 ## Overview
-This Machine Learning module classifies categories of input text. By using an Amazon Alexa together, it can handle speech.
+This Machine Learning module classifies categories of text input. It can also handle speech input using an Amazon Alexa together.
 The diagram of the architecture is as follows.
 ![architecture](https://user-images.githubusercontent.com/37681936/48673918-fc418780-eb89-11e8-9263-6d41d0570655.PNG)
 You can deploy this module in a server or a local PC. It takes JSON requests first, which includes text message, and then process the data to classify categories of the input text. After predicting the category of the input text, it responds with JSON, which contains the predicted category.
@@ -15,7 +15,7 @@ You can deploy this module in a server or a local PC. It takes JSON requests fir
 $ python tfidf.py
 ```
 
-2. Create pickle files for data and dictionary.
+2. Create pickle files for data and dictionaries.
 ```console
 $ python make_pkl_for_data_and_dic.py
 ```
@@ -32,7 +32,7 @@ You will save the weights(parameters) of the model `genre-model.hdf5` in `data/w
 $ python prdict_using_mlp.py
 ```
 
-5. Deploy the model as WebAPI.
+5. Deploy the model as a WebAPI.
 ```console
 $ python webapi.py
 ```
