@@ -2,7 +2,7 @@ import MeCab
 import pickle
 import numpy as np
 
-#tagger = MeCab.Tagger("-d /home/m-taketani/macab-ipadic-neologd")
+#tagger = MeCab.Tagger("-d macab-ipadic-neologd")
 #MeCabのTaggerインスタンスを生成
 tagger = MeCab.Tagger()
 
