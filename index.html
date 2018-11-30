@@ -2,7 +2,8 @@
 <html><meta charset="utf-8"><body>
 <h1 style="text-align:center">文書分類アプリ</h1>
 <div style="text-align:center">
-  <textarea id="q" rows="10" cols="60"></textarea>
+  <textarea id="q" rows="10" cols="60"></textarea><br><br>
+  <button id="qButton">判定</button>
   <form action = "./" method = "POST" enctype = "application/json">
   <div id="result"></div>
 </div>
@@ -12,17 +13,17 @@ window.onload = () => {
   const q = qs('#q')
   const qButton = qs('#qButton')
   const result = qs('#result')
-  // 判定ボタンを押した時 --- (*1)
+  // 判定ボタンを押した時
   qButton.onclick = () => {
     result.innerHTML = "判定中..."
-    // APIサーバに送信するURLを構築 --- (*2)
+    // APIサーバに送信するURLを構築
     const api = "/api?q=" + 
       encodeURIComponent(q.value)
-    // APIにアクセス --- (*3)
+    // APIにアクセス
     fetch(api).then((res) => {
       return res.json() // JSONで返す
     }).then((data) => {
-      // 結果を画面に表示 --- (*4)
+      // 結果を画面に表示
       result.innerHTML =
         data["label"] + 
         "<span style='font-size:0.5em'>(確率：" + 

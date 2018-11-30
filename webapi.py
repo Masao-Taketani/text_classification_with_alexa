@@ -25,10 +25,12 @@ def api():
     print("q=", q)
     # テキストのジャンル判定を行い、予測したカテゴリとその確率を返す
     label, percent, _ = predict_using_mlp.predict_genre(q)
+    #パーセント表示にする
+    percent = round(percent * 100, 2)
     # 結果をJSONで出力
     return json.dumps({
-      "label": label, 
-      "per": percent,
+      "label": label,
+      "percent": percent
     })
 
 ##Alexa用
