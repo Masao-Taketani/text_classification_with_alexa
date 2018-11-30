@@ -7,9 +7,34 @@ import predict_using_mlp
 PORT_NO = 8080
 #Flaskインスタンスを生成
 app = flask.Flask(__name__)
-#デコレーターを設定し、関数apiを定義
-@app.route('/', methods=['POST'])
+
+##Webアプリ用
+#メインHTMLページを返す
+@app.route('/', methods=['GET'])
+def index():
+    with open("index.html", "rb") as f:
+        return f.read()
+
+#テキストエリア内容から、カテゴリを予測し、結果をJSONで返す
+@app.route('/api', methods=['GET'])
 def api():
+    # GETパラメータを取得
+    q = request.args.get('q', '')
+    if q == '':
+      return '{"label": "テキストが空です", "percent":0}'
+    print("q=", q)
+    # テキストのジャンル判定を行い、予測したカテゴリとその確率を返す
+    label, percent, _ = predict_using_mlp.predict_genre(q)
+    # 結果をJSONで出力
+    return json.dumps({
+      "label": label, 
+      "per": percent,
+    })
+
+##Alexa用
+#リクエストとレスポンスの両方をJSONで通信する
+@app.route('/', methods=['POST'])
+def api_2():
 	#'Content-Type'が'application/json'以外の場合
 	if request.headers['Content-Type'] != 'application/json':
 		print('Content-Type:',request.headers['Content-Type'])

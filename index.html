@@ -1,0 +1,39 @@
+<DOCTYPE html>
+<html><meta charset="utf-8"><body>
+<h1 style="text-align:center">文書分類アプリ</h1>
+<div style="text-align:center">
+  <textarea id="q" rows="10" cols="60"></textarea>
+  <form action = "./" method = "POST" enctype = "application/json">
+  <div id="result"></div>
+</div>
+<script>
+const qs = (q) => document.querySelector(q)
+window.onload = () => {
+  const q = qs('#q')
+  const qButton = qs('#qButton')
+  const result = qs('#result')
+  // 判定ボタンを押した時 --- (*1)
+  qButton.onclick = () => {
+    result.innerHTML = "判定中..."
+    // APIサーバに送信するURLを構築 --- (*2)
+    const api = "/api?q=" + 
+      encodeURIComponent(q.value)
+    // APIにアクセス --- (*3)
+    fetch(api).then((res) => {
+      return res.json() // JSONで返す
+    }).then((data) => {
+      // 結果を画面に表示 --- (*4)
+      result.innerHTML =
+        data["label"] + 
+        "<span style='font-size:0.5em'>(確率：" + 
+        data["percent"] + "%)</span>"
+    })
+  }
+}
+</script>
+<style>
+#result { padding: 10px; font-size: 2em; color: red; }
+#q { background-color: #fffff0; }
+</style>
+</body>
+</html>
